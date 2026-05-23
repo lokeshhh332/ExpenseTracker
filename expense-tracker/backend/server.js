@@ -1,17 +1,16 @@
 const express = require("express")
-const dotenv = require("dotenv")
+const mongoose = require("mongoose")
 const cors = require("cors")
-
-const connectDB = require("./config/db")
-
-dotenv.config()
-
-connectDB()
+require("dotenv").config()
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch((err) => console.log(err))
 
 app.get("/", (req, res) => {
   res.send("API Running")
